@@ -1,18 +1,21 @@
 import streamlit as st
-from utils import detect_language, get_bible_explanation  # You can inline these functions if not using utils.py
+from bible_utils import get_verse, explain_verse_with_gemini
 
-st.set_page_config(page_title="Bible Helper", layout="centered")
-st.title("📖 Multilingual Bible Explanation Bot")
+st.set_page_config(page_title="📖 Bible Chatbot with Gemini", layout="centered")
+st.title("📖 Multilingual Bible Chatbot")
 
-query = st.text_input("Enter a Bible verse or topic (in English, French, or Kinyarwanda):")
+reference = st.text_input("Enter a Bible Verse (e.g., John 3:16)")
 
-if st.button("Explain"):
-    if query:
-        lang = detect_language(query)
-        st.info(f"Detected Language: {lang}")
-        with st.spinner("Explaining..."):
-            explanation = get_bible_explanation(query, lang)
-            st.success("Here is the explanation:")
-            st.markdown(explanation)
-    else:
-        st.warning("Please enter a verse or topic.")
+if reference:
+    st.info(f"Fetching explanation for: {reference}")
+    cols = st.columns(3)
+    languages = [("English", "en"), ("French", "fr"), ("Kinyarwanda", "rw")]
+
+    for col, (lang_name, lang_code) in zip(cols, languages):
+        with col:
+            st.subheader(lang_name)
+            verse = get_verse(reference, lang=lang_code)
+            explanation = explain_verse_with_gemini(verse, lang=lang_code)
+
+            st.text_area("Verse", verse, height=100)
+            st.text_area("Explanation", explanation, height=150)
