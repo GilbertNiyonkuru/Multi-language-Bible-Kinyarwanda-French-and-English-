@@ -2,7 +2,7 @@ import streamlit as st
 from bible_utils import get_verse, explain_verse
 
 st.set_page_config(page_title="📖 Bible Chatbot", layout="centered")
-st.title("📖 Multilingual Bible Chatbot")
+st.title("📖 Multilingual Bible Chatbot Developed by Gilbert N")
 
 reference = st.text_input("Enter a Bible Verse (e.g., John 3:16)")
 
