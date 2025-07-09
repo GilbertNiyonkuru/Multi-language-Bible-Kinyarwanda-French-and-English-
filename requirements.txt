@@ -1,4 +1,5 @@
-openai
 streamlit
-langdetect
+google-generativeai
+requests
 python-dotenv
+deep-translator
